@@ -4,7 +4,11 @@ title: Setup
 permalink: /setup/
 ---
 
-This lesson assumes you have the R, RStudio software installed on your computer.
+This workshop assumes you have the R and RStudio software installed on your computer.
+In these workshops, you will be using a specially built Data Science virtual machine with a range of
+useful software installed.
+
+If you don't have R installed on your personal computer:
 
 R can be downloaded [here](https://cran.r-project.org/mirrors.html).
 

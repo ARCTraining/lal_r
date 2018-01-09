@@ -50,10 +50,8 @@ Please ensure you have the latest version of R and RStudio installed on your mac
 
 ## Introduction to RStudio
 
-Welcome to the R portion of the Software Carpentry workshop.
-
-Throughout this lesson, we're going to teach you some of the fundamentals of
-the R language as well as some best practices for organizing code for
+Throughout this workshop, we're going to teach you some of the fundamentals of
+the R language as well as some best practices for organising code for
 scientific projects that will make your life easier.
 
 We'll be using RStudio: a free, open source R integrated development
@@ -533,7 +531,7 @@ symbol used in the community. So the recommendation is to use `<-`.
 > ## Challenge 1
 >
 > Which of the following are valid R variable names?
-> 
+>
 > ~~~
 > min_height
 > max.height
@@ -549,7 +547,7 @@ symbol used in the community. So the recommendation is to use `<-`.
 > > ## Solution to challenge 1
 > >
 > > The following can be used as R variables:
-> > 
+> >
 > > ~~~
 > > min_height
 > > max.height
@@ -559,14 +557,14 @@ symbol used in the community. So the recommendation is to use `<-`.
 > > {: .r}
 > >
 > > The following creates a hidden variable:
-> > 
+> >
 > > ~~~
 > > .mass
 > > ~~~
 > > {: .r}
 > >
 > > The following will not be able to be used to create a variable
-> > 
+> >
 > > ~~~
 > > _age
 > > min-length
@@ -669,23 +667,23 @@ ls
 
 
 ~~~
-function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
-    pattern, sorted = TRUE) 
+function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
+    pattern, sorted = TRUE)
 {
     if (!missing(name)) {
         pos <- tryCatch(name, error = function(e) e)
         if (inherits(pos, "error")) {
             name <- substitute(name)
-            if (!is.character(name)) 
+            if (!is.character(name))
                 name <- deparse(name)
-            warning(gettextf("%s converted to character string", 
+            warning(gettextf("%s converted to character string",
                 sQuote(name)), domain = NA)
             pos <- name
         }
     }
     all.names <- .Internal(ls(envir, all.names, sorted))
     if (!missing(pattern)) {
-        if ((ll <- length(grep("[", pattern, fixed = TRUE))) && 
+        if ((ll <- length(grep("[", pattern, fixed = TRUE))) &&
             ll != length(grep("]", pattern, fixed = TRUE))) {
             if (pattern == "[") {
                 pattern <- "\\["
@@ -776,7 +774,7 @@ network). R and RStudio have functionality for managing packages:
 > What will be the value of each  variable  after each
 > statement in the following program?
 >
-> 
+>
 > ~~~
 > mass <- 47.5
 > age <- 122
@@ -787,21 +785,21 @@ network). R and RStudio have functionality for managing packages:
 >
 > > ## Solution to challenge 2
 > >
-> > 
+> >
 > > ~~~
 > > mass <- 47.5
 > > ~~~
 > > {: .r}
 > > This will give a value of 47.5 for the variable mass
 > >
-> > 
+> >
 > > ~~~
 > > age <- 122
 > > ~~~
 > > {: .r}
 > > This will give a value of 122 for the variable age
 > >
-> > 
+> >
 > > ~~~
 > > mass <- mass * 2.3
 > > ~~~
@@ -809,7 +807,7 @@ network). R and RStudio have functionality for managing packages:
 > > This will multiply the existing value of 47.5 by 2.3 to give a new value of
 > > 109.25 to the variable mass.
 > >
-> > 
+> >
 > > ~~~
 > > age <- age - 20
 > > ~~~
@@ -828,14 +826,14 @@ network). R and RStudio have functionality for managing packages:
 > > ## Solution to challenge 3
 > >
 > > One way of answering this question in R is to use the `>` to set up the following:
-> > 
+> >
 > > ~~~
 > > mass > age
 > > ~~~
 > > {: .r}
-> > 
-> > 
-> > 
+> >
+> >
+> >
 > > ~~~
 > > [1] TRUE
 > > ~~~
@@ -853,7 +851,7 @@ network). R and RStudio have functionality for managing packages:
 > > ## Solution to challenge 4
 > >
 > > We can use the `rm` command to accomplish this task
-> > 
+> >
 > > ~~~
 > > rm(age, mass)
 > > ~~~
@@ -868,7 +866,7 @@ network). R and RStudio have functionality for managing packages:
 > > ## Solution to challenge 5
 > >
 > > We can use the `install.packages()` command to install the required packages.
-> > 
+> >
 > > ~~~
 > > install.packages("ggplot2")
 > > install.packages("plyr")
