@@ -3,9 +3,9 @@
 """Initialize a newly-created repository."""
 
 
+from __future__ import print_function
 import sys
 import os
-
 
 ROOT_AUTHORS = '''\
 FIXME: list authors' names and email addresses.
@@ -63,18 +63,22 @@ and to meet some of our community members.
 
 ## Where to Contribute
 
-1.  If you wish to change this example lesson,
-    please work in <https://github.com/swcarpentry/lesson-example>.
-    This lesson documents the format of our lessons,
+1.  If you wish to change this lesson,
+    please work in <https://github.com/swcarpentry/FIXME>,
+    which can be viewed at <https://swcarpentry.github.io/FIXME>.
+
+2.  If you wish to change the example lesson,
+    please work in <https://github.com/swcarpentry/lesson-example>,
+    which documents the format of our lessons
     and can be viewed at <https://swcarpentry.github.io/lesson-example>.
 
-2.  If you wish to change the template used for workshop websites,
+3.  If you wish to change the template used for workshop websites,
     please work in <https://github.com/swcarpentry/workshop-template>.
     The home page of that repository explains how to set up workshop websites,
     while the extra pages in <https://swcarpentry.github.io/workshop-template>
     provide more background on our design choices.
 
-3.  If you wish to change CSS style files, tools,
+4.  If you wish to change CSS style files, tools,
     or HTML boilerplate for lessons or workshops stored in `_includes` or `_layouts`,
     please work in <https://github.com/swcarpentry/styles>.
 
@@ -154,13 +158,12 @@ You can also [reach us by email][contact].
 [dc-lessons]: http://datacarpentry.org/lessons/
 [dc-site]: http://datacarpentry.org/
 [discuss-list]: http://lists.software-carpentry.org/listinfo/discuss
-[example-site]: https://swcarpentry.github.io/lesson-example/
 [github]: http://github.com
 [github-flow]: https://guides.github.com/introduction/flow/
 [github-join]: https://github.com/join
 [how-contribute]: https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github
-[issues]: https://github.com/swcarpentry/lesson-example/issues/
-[repo]: https://github.com/swcarpentry/lesson-example/
+[issues]: https://github.com/swcarpentry/FIXME/issues/
+[repo]: https://github.com/swcarpentry/FIXME/
 [swc-issues]: https://github.com/issues?q=user%3Aswcarpentry
 [swc-lessons]: http://software-carpentry.org/lessons/
 [swc-site]: http://software-carpentry.org/
@@ -171,14 +174,16 @@ ROOT_CONFIG_YML = '''\
 # Values for this lesson.
 #------------------------------------------------------------
 
-# Which carpentry is this ("swc" or "dc")?
+# Which carpentry is this ("swc", "dc", or "lc")?
 carpentry: "swc"
 
 # Overall title for pages.
 title: "Lesson Title"
 
-# Contact email address.
-email: lessons@software-carpentry.org
+# Contact.  This *must* include the protocol: if it's an email
+# address, it must look like "mailto:lessons@software-carpentry.org",
+# or if it's a URL, "https://gitter.im/username/ProjectName".
+contact: "mailto:lessons@software-carpentry.org"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -193,18 +198,22 @@ repository: <USERNAME>/<PROJECT>
 
 # Sites.
 amy_site: "https://amy.software-carpentry.org/workshops"
-dc_site: "https://datacarpentry.org"
+dc_site: "http://datacarpentry.org"
 swc_github: "https://github.com/swcarpentry"
 swc_site: "https://software-carpentry.org"
+swc_pages: "https://swcarpentry.github.io"
+lc_site: "http://librarycarpentry.github.io/"
 template_repo: "https://github.com/swcarpentry/styles"
 example_repo: "https://github.com/swcarpentry/lesson-example"
 example_site: "https://swcarpentry.github.com/lesson-example"
 workshop_repo: "https://github.com/swcarpentry/workshop-template"
 workshop_site: "https://swcarpentry.github.io/workshop-template"
+training_site: "https://swcarpentry.github.io/instructor-training"
 
 # Surveys.
 pre_survey: "https://www.surveymonkey.com/r/swc_pre_workshop_v1?workshop_id="
 post_survey: "https://www.surveymonkey.com/r/swc_post_workshop_v1?workshop_id="
+training_post_survey: "https://www.surveymonkey.com/r/post-instructor-training"
 
 # Start time in minutes (0 to be clock-independent, 540 to show a start at 09:00 am).
 start_time: 0
@@ -219,6 +228,8 @@ collections:
 
 # Set the default layout for things in the episodes collection.
 defaults:
+  - values:
+      root: ..
   - scope:
       path: ""
       type: episodes
@@ -237,6 +248,7 @@ highlighter: false
 ROOT_INDEX_MD = '''\
 ---
 layout: lesson
+root: .
 ---
 FIXME: home page introduction
 
@@ -264,6 +276,45 @@ title: Setup
 permalink: /setup/
 ---
 FIXME
+'''
+
+ROOT_AIO_MD = '''\
+---
+layout: page 
+permalink: /aio/
+---
+<script>
+  window.onload = function() {
+    var lesson_episodes = [
+    {% for episode in site.episodes %}
+    "{{ episode.url}}"{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ];
+    var xmlHttp = [];  /* Required since we are going to query every episode. */
+    for (i=0; i < lesson_episodes.length; i++) {
+      xmlHttp[i] = new XMLHttpRequest();
+      xmlHttp[i].episode = lesson_episodes[i];  /* To enable use this later. */
+      xmlHttp[i].onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var article_here = document.getElementById(this.episode);
+        var parser = new DOMParser();
+        var htmlDoc = parser.parseFromString(this.responseText,"text/html");
+        var htmlDocArticle = htmlDoc.getElementsByTagName("article")[0];
+        article_here.innerHTML = htmlDocArticle.innerHTML;
+        }
+      }
+      episode_url = "{{ page.root }}" + lesson_episodes[i];
+      xmlHttp[i].open("GET", episode_url);
+      xmlHttp[i].send(null);
+    }
+  }
+</script>
+{% comment %}
+Create anchor for each one of the episodes.
+{% endcomment %}
+{% for episode in site.episodes %}
+<article id="{{ episode.url }}"></article>
+{% endfor %}
 '''
 
 EPISODES_INTRODUCTION_MD = '''\
@@ -310,7 +361,7 @@ permalink: /figures/
 EXTRAS_GUIDE_MD = '''\
 ---
 layout: page
-title: "Instructors' Guide"
+title: "Instructor Notes"
 permalink: /guide/
 ---
 FIXME
@@ -328,6 +379,7 @@ BOILERPLATE = (
     ('index.md', ROOT_INDEX_MD),
     ('reference.md', ROOT_REFERENCE_MD),
     ('setup.md', ROOT_SETUP_MD),
+    ('aio.md', ROOT_AIO_MD),
     ('_episodes/01-introduction.md', EPISODES_INTRODUCTION_MD),
     ('_extras/about.md', EXTRAS_ABOUT_MD),
     ('_extras/discuss.md', EXTRAS_DISCUSS_MD),

@@ -8,13 +8,14 @@ questions:
 - "How to manage your environment?"
 - "How to install packages?"
 objectives:
-- "To gain familiarity with the various panes in the RStudio IDE"
-- "To gain familiarity with the buttons, short cuts and options in the RStudio IDE"
-- "To understand variables and how to assign to them"
-- "To be able to manage your workspace in an interactive R session"
-- "To be able to use mathematical and comparison operations"
-- "To be able to call functions"
-- "Introduction to package management"
+- "Describe the purpose and use of each pane in the RStudio IDE"
+- "Locate buttons and options in the RStudio IDE"
+- "Define a variable"
+- "Assign data to a variable"
+- "Manage a workspace in an interactive R session"
+- "Use mathematical and comparison operators"
+- "Call functions"
+- "Manage packages"
 keypoints:
 - "Use RStudio to write and run R programs."
 - "R has the usual arithmetic operators and mathematical functions."
@@ -22,6 +23,7 @@ keypoints:
 - "Use `ls()` to list the variables in a program."
 - "Use `rm()` to delete objects in a program."
 - "Use `install.packages()` to install packages (libraries)."
+source: Rmd
 ---
 
 
@@ -32,25 +34,32 @@ keypoints:
 Science is a multi-step process: once you've designed an experiment and collected
 data, the real fun begins! This lesson will teach you how to start this process using
 R and RStudio. We will begin with raw data, perform exploratory analyses, and learn
-how to plot results graphically. This example starts with the
-`data/gapminder-FiveYearData.csv` dataset containing population information for many
+how to plot results graphically. This example starts with a dataset from
+[gapminder.org](https://www.gapminder.org) containing population information for many
 countries through time. Can you read the data into R? Can you plot the population for
-Senegal? Can you calculate the average income for countries on continent of Asia?
+Senegal? Can you calculate the average income for countries on the continent of Asia?
 By the end of these lessons you will be able to do things like plot the populations
 for all of these countries in under a minute!
 
+## Before Starting The Workshop
+
+Please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used in the workshop may not install correctly (or at all) if R is not up to date.
+
+[Download and install the latest version of R here](https://www.r-project.org/)
+[Download and install RStudio here](https://www.rstudio.com/)
+
 ## Introduction to RStudio
 
-Welcome to the R portion of the Software Carpentry workshop.
-
-Throughout this lesson, we're going to teach you some of the fundamentals of
-the R language as well as some best practices for organizing code for
+Throughout this workshop, we're going to teach you some of the fundamentals of
+the R language as well as some best practices for organising code for
 scientific projects that will make your life easier.
 
 We'll be using RStudio: a free, open source R integrated development
 environment. It provides a built in editor, works on all platforms (including
 on servers) and provides many advantages such as integration with version
 control and project management.
+
+
 
 **Basic layout**
 
@@ -60,8 +69,13 @@ When you first open RStudio, you will be greeted by three panels:
   * Environment/History (tabbed in upper right)
   * Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
+![RStudio layout](../fig/01-rstudio.png)
+
 Once you open files, such as R scripts, an editor panel will also open
 in the top left.
+
+![RStudio layout with .R file open](../fig/01-rstudio-script.png)
+
 
 ## Work flow within RStudio
 There are two main ways one can work within RStudio.
@@ -70,8 +84,8 @@ There are two main ways one can work within RStudio.
 a .R file to run later.
    *  This works well when doing small tests and initially starting off.
    *  It quickly becomes laborious
-2. Start writing in an .R file and use RStudio's command / short cut
-to push current line, selected lines or modified lines to the
+2. Start writing in an .R file and use RStudio's short cut keys for the Run command
+to push the current line, selected lines or modified lines to the
 interactive R console.
    * This is a great way to start; all your code is saved for later
    * You will be able to run the file you create from within RStudio
@@ -88,7 +102,7 @@ interactive R console.
 > If you have modified a line of code within a block of code you have just run,
 > there is no need to reselct the section and `Run`, you can use the next button
 > along, `Re-run the previous region`. This will run the previous code block
-> inculding the modifications you have made.
+> including the modifications you have made.
 {: .callout}
 
 ## Introduction to R
@@ -151,7 +165,7 @@ prompt.
 > applies to Mac users as well!
 >
 > Cancelling a command isn't only useful for killing incomplete commands:
-> you can also use it to tell R to stop running code (for example if its
+> you can also use it to tell R to stop running code (for example if it's
 > taking much longer than you expect), or to get rid of the code you're
 > currently writing.
 >
@@ -354,7 +368,7 @@ We can also do comparison in R:
 
 
 ~~~
-1 <  2  # less than
+1 < 2  # less than
 ~~~
 {: .r}
 
@@ -484,6 +498,7 @@ Assignment values can contain the variable being assigned to:
 
 ~~~
 x <- x + 1 #notice how RStudio updates its description of x on the top right tab
+y <- x * 2
 ~~~
 {: .r}
 
@@ -512,6 +527,52 @@ But this is much less common among R users.  The most important thing is to
 **be consistent** with the operator you use. There are occasionally places
 where it is less confusing to use `<-` than `=`, and it is the most common
 symbol used in the community. So the recommendation is to use `<-`.
+
+> ## Challenge 1
+>
+> Which of the following are valid R variable names?
+>
+> ~~~
+> min_height
+> max.height
+> _age
+> .mass
+> MaxLength
+> min-length
+> 2widths
+> celsius2kelvin
+> ~~~
+> {: .r}
+>
+> > ## Solution to challenge 1
+> >
+> > The following can be used as R variables:
+> >
+> > ~~~
+> > min_height
+> > max.height
+> > MaxLength
+> > celsius2kelvin
+> > ~~~
+> > {: .r}
+> >
+> > The following creates a hidden variable:
+> >
+> > ~~~
+> > .mass
+> > ~~~
+> > {: .r}
+> >
+> > The following will not be able to be used to create a variable
+> >
+> > ~~~
+> > _age
+> > min-length
+> > 2widths
+> > ~~~
+> > {: .r}
+> {: .solution}
+{: .challenge}
 
 ## Vectorization
 
@@ -592,7 +653,7 @@ ls()
 >
 {: .callout}
 
-Note here that we didn't given any arguments to `ls`, but we still
+Note here that we didn't give any arguments to `ls`, but we still
 needed to give the parentheses to tell R to call the function.
 
 If we type `ls` by itself, R will print out the source code for that function!
@@ -606,23 +667,23 @@ ls
 
 
 ~~~
-function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
-    pattern, sorted = TRUE) 
+function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
+    pattern, sorted = TRUE)
 {
     if (!missing(name)) {
         pos <- tryCatch(name, error = function(e) e)
         if (inherits(pos, "error")) {
             name <- substitute(name)
-            if (!is.character(name)) 
+            if (!is.character(name))
                 name <- deparse(name)
-            warning(gettextf("%s converted to character string", 
+            warning(gettextf("%s converted to character string",
                 sQuote(name)), domain = NA)
             pos <- name
         }
     }
     all.names <- .Internal(ls(envir, all.names, sorted))
     if (!missing(pattern)) {
-        if ((ll <- length(grep("[", pattern, fixed = TRUE))) && 
+        if ((ll <- length(grep("[", pattern, fixed = TRUE))) &&
             ll != length(grep("]", pattern, fixed = TRUE))) {
             if (pattern == "[") {
                 pattern <- "\\["
@@ -637,7 +698,11 @@ function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
     }
     else all.names
 }
+<<<<<<< HEAD
 <bytecode: 0x25fc980>
+=======
+<bytecode: 0x7ffdf9e17638>
+>>>>>>> fa92782bfba2e348ea523b82f7f4033c006ce7ab
 <environment: namespace:base>
 ~~~
 {: .output}
@@ -697,7 +762,7 @@ Error in rm(list <- ls()): ... must contain names or character strings
 
 It is possible to add functions to R by writing a package, or by
 obtaining a package written by someone else. As of this writing, there
-are over 7,000 packages available on CRAN (the comprehensive R archive
+are over 10,000 packages available on CRAN (the comprehensive R archive
 network). R and RStudio have functionality for managing packages:
 
 * You can see what packages are installed by typing
@@ -708,58 +773,12 @@ network). R and RStudio have functionality for managing packages:
 * You can remove a package with `remove.packages("packagename")`
 * You can make a package available for use with `library(packagename)`
 
-> ## Challenge 1
->
-> Which of the following are valid R variable names?
-> 
-> ~~~
-> min_height
-> max.height
-> _age
-> .mass
-> MaxLength
-> min-length
-> 2widths
-> celsius2kelvin
-> ~~~
-> {: .r}
->
-> > ## Solution to challenge 1
-> >
-> > The following can be used as R variables:
-> > 
-> > ~~~
-> > min_height
-> > max.height
-> > MaxLength
-> > celsius2kelvin
-> > ~~~
-> > {: .r}
-> >
-> > The following creates a hidden variable:
-> > 
-> > ~~~
-> > .mass
-> > ~~~
-> > {: .r}
-> >
-> > The following will not be able to be used to create a variable
-> > 
-> > ~~~
-> > _age
-> > min-length
-> > 2widths
-> > ~~~
-> > {: .r}
-> {: .solution}
-{: .challenge}
-
 > ## Challenge 2
 >
 > What will be the value of each  variable  after each
 > statement in the following program?
 >
-> 
+>
 > ~~~
 > mass <- 47.5
 > age <- 122
@@ -770,21 +789,21 @@ network). R and RStudio have functionality for managing packages:
 >
 > > ## Solution to challenge 2
 > >
-> > 
+> >
 > > ~~~
 > > mass <- 47.5
 > > ~~~
 > > {: .r}
 > > This will give a value of 47.5 for the variable mass
 > >
-> > 
+> >
 > > ~~~
 > > age <- 122
 > > ~~~
 > > {: .r}
 > > This will give a value of 122 for the variable age
 > >
-> > 
+> >
 > > ~~~
 > > mass <- mass * 2.3
 > > ~~~
@@ -792,7 +811,7 @@ network). R and RStudio have functionality for managing packages:
 > > This will multiply the existing value of 47.5 by 2.3 to give a new value of
 > > 109.25 to the variable mass.
 > >
-> > 
+> >
 > > ~~~
 > > age <- age - 20
 > > ~~~
@@ -811,14 +830,14 @@ network). R and RStudio have functionality for managing packages:
 > > ## Solution to challenge 3
 > >
 > > One way of answering this question in R is to use the `>` to set up the following:
-> > 
+> >
 > > ~~~
 > > mass > age
 > > ~~~
 > > {: .r}
-> > 
-> > 
-> > 
+> >
+> >
+> >
 > > ~~~
 > > [1] TRUE
 > > ~~~
@@ -836,7 +855,7 @@ network). R and RStudio have functionality for managing packages:
 > > ## Solution to challenge 4
 > >
 > > We can use the `rm` command to accomplish this task
-> > 
+> >
 > > ~~~
 > > rm(age, mass)
 > > ~~~
@@ -851,10 +870,11 @@ network). R and RStudio have functionality for managing packages:
 > > ## Solution to challenge 5
 > >
 > > We can use the `install.packages()` command to install the required packages.
-> > We can also install them in one go like so:
-> > 
+> >
 > > ~~~
-> > install.packages(c("ggplot2", "plyr", "gapminder"))
+> > install.packages("ggplot2")
+> > install.packages("plyr")
+> > install.packages("gapminder")
 > > ~~~
 > > {: .r}
 > {: .solution}
